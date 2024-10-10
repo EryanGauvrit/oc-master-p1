@@ -11,6 +11,7 @@ import { getNbrMedals } from 'src/app/core/util';
 export class HomeComponent implements OnInit {
     public nbrMedals: number[] = [];
     public countries: string[] = [];
+    public nbrOfJOs: number = 0;
 
     constructor(private olympicService: OlympicService) {}
 
@@ -22,9 +23,22 @@ export class HomeComponent implements OnInit {
             olympicsSorted.forEach((olympic: Olympic) => {
                 this.countries.push(olympic.country);
                 this.nbrMedals.push(getNbrMedals(olympic.participations));
+                this.nbrOfJOs = this.getNbrOfJOs(olympics);
             });
         });
     }
     
+    private getNbrOfJOs(olympics: Olympic[]): number {
+        const listJo: number[] = [];
+        olympics.forEach((olympic: Olympic) => {
+            olympic.participations.forEach((participation) => {
+                if (!listJo.includes(participation.year)) {
+                    listJo.push(participation.year);
+                }
+            });
+        })
+
+        return listJo.length;
+    }
 }
 
