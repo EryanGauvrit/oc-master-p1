@@ -5,4 +5,7 @@
         <app-card title='Number of JOs' content="10"></app-card>
         <app-card title='Number of Countries' content="10"></app-card>
     </section>
+    <section class="chart-container" *ngIf="nbrMedals.length > 0 && countries.length > 0">
+        <app-pie-chart [nbrMedals]="nbrMedals" [countries]="countries" ></app-pie-chart>
+    </section>
 </main>
