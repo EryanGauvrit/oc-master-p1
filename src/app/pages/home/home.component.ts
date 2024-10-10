@@ -1,18 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+    public nbrMedals: number[] = [];
+    public countries: string[] = [];
 
-  constructor(private olympicService: OlympicService) {}
+    constructor(private olympicService: OlympicService) {}
 
-  ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-  }
+    ngOnInit(): void {
+        this.olympicService.getOlympics().subscribe((olympics: Olympic[]) => {
+        
+            olympics.forEach((olympic: Olympic) => {
+                this.countries.push(olympic.country);
+                this.nbrMedals.push(this.getNbrMedals(olympic.participations));
+            });
+        });
+    }
+    private getNbrMedals(participations: Participation[]) {
+        let totalMedals = 0;
+        participations.forEach((participation: Participation) => {
+            totalMedals += participation.medalsCount;
+        });
+        return totalMedals;
+    }
 }
+
