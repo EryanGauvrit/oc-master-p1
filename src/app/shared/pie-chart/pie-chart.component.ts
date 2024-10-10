@@ -15,6 +15,15 @@ export class PieChartComponent implements OnInit {
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     onClick: this.chartClicked,
+    onHover: (event, activeElements) => {
+      // add class cursor-pointer to the canvas element
+      const element = event.native?.target as HTMLElement;
+      if (activeElements.length) {
+        element.classList.add('cursor-pointer');
+      } else {
+        element.classList.remove('cursor-pointer');
+      }
+    },
     plugins: {
       legend: {
         display: true,
@@ -50,7 +59,6 @@ export class PieChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.countries, this.nbrMedals);
     this.pieChartData = {
       labels: this.countries,
       datasets: [
@@ -69,9 +77,12 @@ export class PieChartComponent implements OnInit {
     elements: ActiveElement[],
     chart: Chart
   ): void {
-    console.log(event);
-    console.log(elements);
-    console.log(chart);
+
+    const index = elements[0].index // index of the clicked element
+    const labels = chart.data.labels;
+    if(!labels || !labels[index]) return;
+    const chartDetail = labels[index] // get the label of the clicked element
+    console.log(chartDetail);
   }
 
 }
