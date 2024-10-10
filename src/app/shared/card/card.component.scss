@@ -1,0 +1,16 @@
+.card {
+    border: 2px solid #07818C;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    h3 {
+        opacity: 0.8;
+        font-weight: lighter;
+    }
+    p {
+        font-weight: bold;
+    }
+}
