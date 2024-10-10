@@ -16,8 +16,10 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.olympicService.getOlympics().subscribe((olympics: Olympic[]) => {
-        
-            olympics.forEach((olympic: Olympic) => {
+            const olympicsSorted = olympics.sort((a, b) => {
+                return this.getNbrMedals(b.participations) - this.getNbrMedals(a.participations);
+            });
+            olympicsSorted.forEach((olympic: Olympic) => {
                 this.countries.push(olympic.country);
                 this.nbrMedals.push(this.getNbrMedals(olympic.participations));
             });

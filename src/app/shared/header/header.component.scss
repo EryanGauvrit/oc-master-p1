@@ -1,7 +1,14 @@
 header {
     background-color: #f8f9fa;
-    padding: 10px 0;
+    padding: 1rem;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+app-button-back {
+    position: absolute;
+    left: 1rem;
 }
