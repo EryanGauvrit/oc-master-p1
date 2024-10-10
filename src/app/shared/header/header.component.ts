@@ -16,8 +16,7 @@ export class HeaderComponent implements OnInit {
         this.router.events.pipe(
             filter((event) => event instanceof NavigationEnd),
         ).subscribe(() => {
-                console.log('this.activatedRoute', this.router.url);
-                this.isHomePage = this.router.url === '/';
+            this.isHomePage = this.router.url === '/';
         });
     }
 

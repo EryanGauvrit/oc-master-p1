@@ -88,7 +88,7 @@ export class PieChartComponent implements OnInit {
             const activeElement = active[0] as ActiveElement;
             const country = this.countries[activeElement.index];
             const slug = formatSlug(country);
-            await this.router.navigate(['', slug]);
+            await this.router.navigate(['/country', slug]);
         }
     }
 

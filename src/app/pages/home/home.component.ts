@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { getNbrMedals } from 'src/app/core/util';
 
 @Component({
     selector: 'app-home',
@@ -17,20 +17,14 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
         this.olympicService.getOlympics().subscribe((olympics: Olympic[]) => {
             const olympicsSorted = olympics.sort((a, b) => {
-                return this.getNbrMedals(b.participations) - this.getNbrMedals(a.participations);
+                return getNbrMedals(b.participations) - getNbrMedals(a.participations);
             });
             olympicsSorted.forEach((olympic: Olympic) => {
                 this.countries.push(olympic.country);
-                this.nbrMedals.push(this.getNbrMedals(olympic.participations));
+                this.nbrMedals.push(getNbrMedals(olympic.participations));
             });
         });
     }
-    private getNbrMedals(participations: Participation[]) {
-        let totalMedals = 0;
-        participations.forEach((participation: Participation) => {
-            totalMedals += participation.medalsCount;
-        });
-        return totalMedals;
-    }
+    
 }
 

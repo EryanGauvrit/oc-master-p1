@@ -1,4 +1,6 @@
 <header>
-    <app-button-back *ngIf="isHomePage"></app-button-back>
-    <h1>Olympic games app</h1>
+    <app-button-back *ngIf="!isHomePage"></app-button-back>
+    <a routerLink="/">
+        <h1>Olympic games app</h1>
+    </a>
 </header>

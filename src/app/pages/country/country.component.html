@@ -1,1 +1,14 @@
-<app-button-back></app-button-back>
+
+<main *ngIf="olympic">
+    <h2>{{ olympic.country }}</h2>
+    <section class="cards">
+        <app-card title='Number of entries' [content]="olympic.participations.length.toString()"></app-card>
+        <app-card title='Total number medals' [content]="medalsCount.toString()"></app-card>
+        <app-card title='Total number of athletes' [content]="athletesCount.toString()"></app-card>
+    </section>
+</main>
+<main *ngIf="!olympic">
+    <h2>
+        No Olympic games found
+    </h2>
+</main>
