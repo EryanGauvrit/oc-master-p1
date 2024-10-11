@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 
 @Injectable({
@@ -26,7 +26,19 @@ export class OlympicService {
     );
   }
 
+  loadDataByCountry(country: string) {
+    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+      map((value) => {
+        const olympic = value.find((olympic) => olympic.country.toLowerCase() === country.toLowerCase().replace(/-/g, ' '));
+        if(!olympic) throw new Error('Country not found');
+        
+        return olympic
+      }),
+    );
+  }
+
   getOlympics() {
     return this.olympics$.asObservable();
   }
+
 }

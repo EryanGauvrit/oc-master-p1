@@ -7,6 +7,10 @@
     margin: auto;
 }
 
+main {
+    gap: 2rem;
+}
+
 // Global styles
 
 body {
@@ -16,20 +20,36 @@ body {
     background-color: #f8f9fa;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+.mat-typography p {
     margin: 0;
 }
 
-h1 {
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.mat-typography h1 {
+    margin: 0;
     font-size: 2rem;
 }
 
-h2 {
+.mat-typography h2 {
+    margin: 0;
     font-size: 1.5rem;
     font-weight: normal;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    background-color: #07818C;
+    color: white;
+    width: fit-content;
 }
 
-h3 {
+.mat-typography h3 {
+    margin: 0;
     font-size: 1.17rem;
 }
 
@@ -39,4 +59,34 @@ h3 {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.back-btn {
+    background-color: #07818C;
+    border: none;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: large;
+    transition: background-color .3s;
+    &:hover {
+        background-color: #066f7a;
+    }
+    cursor: pointer;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
 }
