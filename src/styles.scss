@@ -7,6 +7,10 @@
     margin: auto;
 }
 
+main {
+    gap: 2rem;
+}
+
 // Global styles
 
 body {
@@ -16,7 +20,7 @@ body {
     background-color: #f8f9fa;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+.mat-typography p {
     margin: 0;
 }
 
@@ -25,16 +29,27 @@ a {
     color: inherit;
 }
 
-h1 {
+.mat-typography h1 {
+    margin: 0;
     font-size: 2rem;
 }
 
-h2 {
+.mat-typography h2 {
+    margin: 0;
     font-size: 1.5rem;
     font-weight: normal;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    background-color: #07818C;
+    color: white;
+    width: fit-content;
 }
 
-h3 {
+.mat-typography h3 {
+    margin: 0;
     font-size: 1.17rem;
 }
 
@@ -70,20 +85,8 @@ h3 {
     gap: 2rem;
 }
 
-h2 {
-    text-align: center;
-    margin: auto;
-    margin-bottom: 2rem;
-    padding: .5rem 1rem;
-    border-radius: 10px;
-    background-color: #07818C;
-    color: white;
-    width: fit-content;
-}
-
 .chart-container {
     display: flex;
     justify-content: center;
     gap: 2rem;
-    margin-top: 3rem;
 }

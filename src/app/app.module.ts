@@ -14,6 +14,7 @@ import { ButtonBackComponent } from './shared/button-back/button-back.component'
 import { CardComponent } from './shared/card/card.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { PieChartComponent } from './shared/pie-chart/pie-chart.component';
+import { LineChartComponent } from './shared/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PieChartComponent } from './shared/pie-chart/pie-chart.component';
     CardComponent,
     PieChartComponent,
     ButtonBackComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule, 

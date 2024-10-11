@@ -6,9 +6,13 @@
         <app-card title='Total number medals' [content]="medalsCount.toString()"></app-card>
         <app-card title='Total number of athletes' [content]="athletesCount.toString()"></app-card>
     </section>
+    <section *ngIf="lineChartData" class="line-chart">
+        <app-line-chart [nbrMedals]="lineChartData.nbrMedals" [years]="lineChartData.years"></app-line-chart>
+    </section>
 </main>
 <main *ngIf="!olympic">
     <h2>
         No Olympic games found
     </h2>
+    <button class="backToHome" routerLink="/">Back to home</button>
 </main>
