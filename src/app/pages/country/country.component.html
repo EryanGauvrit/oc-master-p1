@@ -6,7 +6,7 @@
         <app-card title='Total number medals' [content]="medalsCount.toString()"></app-card>
         <app-card title='Total number of athletes' [content]="athletesCount.toString()"></app-card>
     </section>
-    <section *ngIf="lineChartData" class="line-chart">
+    <section *ngIf="lineChartData" class="chart-container">
         <app-line-chart [nbrMedals]="lineChartData.nbrMedals" [years]="lineChartData.years"></app-line-chart>
     </section>
 </main>

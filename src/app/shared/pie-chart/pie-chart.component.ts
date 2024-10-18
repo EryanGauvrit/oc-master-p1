@@ -13,12 +13,13 @@ import { formatSlug } from 'src/app/core/util';
 export class PieChartComponent implements OnInit {
     @Input() countries!: string[];
     @Input() nbrMedals!: number[];
-    @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+    @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
     constructor(private router: Router) {}
 
     public pieChartOptions: ChartConfiguration['options'] = {
         responsive: true,
+        maintainAspectRatio: false,
         onHover: (event, activeElements) => {
             // add class cursor-pointer to the canvas element
             const element = event.native?.target as HTMLElement;
@@ -49,28 +50,20 @@ export class PieChartComponent implements OnInit {
             },
         },
     };
-    public pieChartData: ChartData<'pie', number[], string | string[]> = {
-        labels: this.countries,
-        datasets: [
-            {
-                label: '🏅',
-                data: this.nbrMedals,
-            },
-        ],
-    };
+    public pieChartData?: ChartData<'pie', number[], string | string[]>;
     public pieChartType: ChartType = 'pie';
 
 
 
     ngOnInit(): void {
         this.pieChartData = {
-        labels: this.countries,
-        datasets: [
-            {
-                label: '🏅',
-                data: this.nbrMedals,
-            },
-        ],
+            labels: this.countries,
+            datasets: [
+                {
+                    label: '🏅',
+                    data: this.nbrMedals,
+                },
+            ],
         };
         this.chart?.update();
     }

@@ -6,12 +6,16 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent,
+  },
+  {
     path: 'country/:country',
     component: CountryComponent,
   },
   {
-    path: '',
-    component: HomeComponent,
+    path: 'not-found', // wildcard
+    component: NotFoundComponent,
   },
   {
     path: '**', // wildcard
