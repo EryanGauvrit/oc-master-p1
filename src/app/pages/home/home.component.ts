@@ -12,18 +12,23 @@ export class HomeComponent implements OnInit {
     public nbrMedals: number[] = [];
     public countries: string[] = [];
     public nbrOfJOs: number = 0;
+    public errorMessage?: string
 
     constructor(private olympicService: OlympicService) {}
 
     ngOnInit(): void {
-        this.olympicService.getOlympics().subscribe((olympics: Olympic[]) => {
-            const olympicsSorted = olympics.sort((a, b) => {
+        this.olympicService.getOlympics().subscribe(({data, error}: {data:Olympic[], error?: unknown}) => {
+            if(error) {
+                this.errorMessage = 'An error occurred while fetching the data';
+                return;
+            }
+            const olympicsSorted = data.sort((a, b) => {
                 return getNbrMedals(b.participations) - getNbrMedals(a.participations);
             });
             olympicsSorted.forEach((olympic: Olympic) => {
                 this.countries.push(olympic.country);
                 this.nbrMedals.push(getNbrMedals(olympic.participations));
-                this.nbrOfJOs = this.getNbrOfJOs(olympics);
+                this.nbrOfJOs = this.getNbrOfJOs(data);
             });
         });
     }
