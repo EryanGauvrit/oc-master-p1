@@ -23,3 +23,15 @@ export const getNbrAthletes = (participations: Participation[]) => {
     });
     return totalAthletes;
 }
+
+// return aspect ratio based on media query
+
+export const getAspectRatio = () => {
+    if(window.matchMedia('(max-width: 768px)').matches) {
+        return 1.8;
+    } else if(window.matchMedia('(max-width: 1024px)').matches) {
+        return 1.2;
+    } else {
+        return 1;
+    }
+}

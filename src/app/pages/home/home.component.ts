@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
                 this.nbrMedals.push(getNbrMedals(olympic.participations));
                 this.nbrOfJOs = this.getNbrOfJOs(data);
             });
-        });
+        })
     }
     
     private getNbrOfJOs(olympics: Olympic[]): number {

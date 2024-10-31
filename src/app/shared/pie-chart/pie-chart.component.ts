@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveElement, ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { formatSlug } from 'src/app/core/util';
+import { formatSlug, getAspectRatio } from 'src/app/core/util';
 
 @Component({
     selector: 'app-pie-chart',
@@ -19,6 +19,7 @@ export class PieChartComponent implements OnInit {
     public pieChartOptions: ChartConfiguration['options'] = {
         responsive: true,
         maintainAspectRatio: false,
+        aspectRatio: getAspectRatio(),
         layout: {
             padding: 20,
         },
@@ -50,6 +51,7 @@ export class PieChartComponent implements OnInit {
 
     public pieChartPlugins: ChartConfiguration['plugins'] = [{
         id: 'customLabels',
+        
         afterDraw: (chart) => {
             const ctx = chart.ctx;
             const { top, left, right, bottom } = chart.chartArea;
@@ -76,11 +78,10 @@ export class PieChartComponent implements OnInit {
 
                 const arrowLength = Math.min(maxArrowLength, Math.abs(labelX - x));
 
-                // Limiter l'extension de la flèche à la longueur maximale
                 if (isLeftSide) {
-                    labelX = x - arrowLength; // Limite la longueur vers la gauche
+                    labelX = x - arrowLength;
                 } else {
-                    labelX = x + arrowLength; // Limite la longueur vers la droite
+                    labelX = x + arrowLength;
                 }
                 
                 ctx.strokeStyle = this.colors[index];
@@ -93,7 +94,7 @@ export class PieChartComponent implements OnInit {
 
                 ctx.fillStyle = this.colors[index];
                 ctx.font = '12px Arial';
-                ctx.textAlign = isLeftSide ? 'right' : 'left'; // Aligner à droite si sur le côté gauche
+                ctx.textAlign = isLeftSide ? 'right' : 'left';
                 ctx.textBaseline = 'middle';
                 const textPadding = isLeftSide ? -15 : 15;
 

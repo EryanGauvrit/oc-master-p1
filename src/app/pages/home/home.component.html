@@ -9,7 +9,7 @@
         <h3>Error</h3>
         <p>{{errorMessage}}</p>
     </div>
-    <section class="chart-container" *ngIf="nbrMedals.length > 0 && countries.length > 0">
+    <section *ngIf="nbrMedals.length > 0 && countries.length > 0">
         <app-pie-chart [nbrMedals]="nbrMedals" [countries]="countries" ></app-pie-chart>
     </section>
 </main>
