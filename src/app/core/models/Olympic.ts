@@ -8,10 +8,10 @@ example of an olympic country:
 }
 */
 
-import { Participation } from "./Participation";
+import { IParticipation } from "./Participation";
 
-export interface Olympic {
+export interface IOlympic {
     id: number;
     country: string;
-    participations: Participation[];
+    participations: IParticipation[];
 }

@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Olympic } from '../models/Olympic';
+import { IOlympic } from '../models/Olympic';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<{data:Olympic[], error?: unknown}>({data:[]});
+  private olympics$ = new BehaviorSubject<{data:IOlympic[], error?: unknown}>({data:[]});
 
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
-    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+    return this.http.get<IOlympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next({data: value})),
       catchError((error) => {
       // TODO: improve error handling
@@ -28,7 +28,7 @@ export class OlympicService {
   }
 
   loadDataByCountry(country: string) {
-    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+    return this.http.get<IOlympic[]>(this.olympicUrl).pipe(
       map((value) => {
         const olympic = value.find((olympic) => olympic.country.toLowerCase() === country.toLowerCase().replace(/-/g, ' '));
         if(!olympic) throw new Error('Country not found');

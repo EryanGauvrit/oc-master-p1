@@ -10,7 +10,7 @@ example of participation:
 }
 */
 
-export interface Participation {
+export interface IParticipation {
     id: number;
     year: number;
     city: string;

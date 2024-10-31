@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Olympic } from 'src/app/core/models/Olympic';
-import { Participation } from 'src/app/core/models/Participation';
+import { IOlympic } from 'src/app/core/models/Olympic';
+import { IParticipation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { getNbrAthletes, getNbrMedals } from 'src/app/core/util';
 
@@ -12,7 +12,7 @@ import { getNbrAthletes, getNbrMedals } from 'src/app/core/util';
     styleUrl: './country.component.scss'
 })
 export class CountryComponent implements OnInit {
-    public olympic?: Olympic;
+    public olympic?: IOlympic;
     public medalsCount: number = 0;
     public athletesCount: number = 0;
     public lineChartData?: {
@@ -45,7 +45,7 @@ export class CountryComponent implements OnInit {
             });
     }
 
-    getLineChartData(participations: Participation[]) {
+    getLineChartData(participations: IParticipation[]) {
         const orderByDate = participations.sort((a, b) => a.year - b.year);
         const years = orderByDate.map(participation => participation.year.toString());
         const nbrMedals = orderByDate.map(participation => participation.medalsCount);
