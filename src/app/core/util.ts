@@ -1,4 +1,4 @@
-import { Participation } from "./models/Participation";
+import { IParticipation } from "./models/Participation";
 
 export const formatSlug = (str: string) => {
     return str
@@ -8,18 +8,30 @@ export const formatSlug = (str: string) => {
     .toLowerCase();
 };
 
-export const getNbrMedals = (participations: Participation[]) => {
+export const getNbrMedals = (participations: IParticipation[]) => {
     let totalMedals = 0;
-    participations.forEach((participation: Participation) => {
+    participations.forEach((participation: IParticipation) => {
         totalMedals += participation.medalsCount;
     });
     return totalMedals;
 }
 
-export const getNbrAthletes = (participations: Participation[]) => {
+export const getNbrAthletes = (participations: IParticipation[]) => {
     let totalAthletes = 0;
-    participations.forEach((participation: Participation) => {
+    participations.forEach((participation: IParticipation) => {
         totalAthletes += participation.athleteCount;
     });
     return totalAthletes;
+}
+
+// return aspect ratio based on media query
+
+export const getAspectRatio = () => {
+    if(window.matchMedia('(max-width: 768px)').matches) {
+        return 1.8;
+    } else if(window.matchMedia('(max-width: 1024px)').matches) {
+        return 1.2;
+    } else {
+        return 1;
+    }
 }

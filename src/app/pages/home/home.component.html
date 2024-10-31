@@ -5,7 +5,11 @@
         <app-card title='Number of JOs' [content]="nbrOfJOs.toString()"></app-card>
         <app-card title='Number of Countries' [content]="countries.length.toString()"></app-card>
     </section>
-    <section class="chart-container" *ngIf="nbrMedals.length > 0 && countries.length > 0">
+    <div *ngIf="errorMessage" class="alert-error">
+        <h3>Error</h3>
+        <p>{{errorMessage}}</p>
+    </div>
+    <section *ngIf="nbrMedals.length > 0 && countries.length > 0">
         <app-pie-chart [nbrMedals]="nbrMedals" [countries]="countries" ></app-pie-chart>
     </section>
 </main>

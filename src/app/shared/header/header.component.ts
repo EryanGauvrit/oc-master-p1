@@ -10,13 +10,13 @@ import { filter } from 'rxjs';
 export class HeaderComponent implements OnInit {
     constructor(private router: Router) {}
 
-    public isHomePage: boolean = false;
+    public isActiveButton: boolean = false;
 
     ngOnInit(): void {
         this.router.events.pipe(
             filter((event) => event instanceof NavigationEnd),
         ).subscribe(() => {
-            this.isHomePage = this.router.url === '/';
+            this.isActiveButton = this.router.url === '/' || this.router.url === '/not-found' ? false : true;
         });
     }
 
