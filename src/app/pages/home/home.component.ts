@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { IMedalsPerCountry } from 'src/app/core/models/MedalsPerCountry';
 import { IOlympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { getNbrMedals } from 'src/app/core/util';
@@ -8,42 +10,58 @@ import { getNbrMedals } from 'src/app/core/util';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-    public nbrMedals: number[] = [];
-    public countries: string[] = [];
-    public nbrOfJOs: number = 0;
-    public errorMessage?: string
+export class HomeComponent implements OnDestroy {
+    public nbrOfJOs = signal<number>(0);
+    public errorMessage =   signal<string | null>(null);
+    public medalsByCountries=  signal<IMedalsPerCountry[]> ([]);
+    private olympicService = inject(OlympicService)
+    private destroy$ = new Subject<void>();
 
-    constructor(private olympicService: OlympicService) {}
+    constructor() {
+        this.loadData();
+    }
 
-    ngOnInit(): void {
-        this.olympicService.getOlympics().subscribe(({data, error}: {data:IOlympic[], error?: unknown}) => {
-            if(error) {
-                this.errorMessage = 'An error occurred while fetching the data';
-                return;
-            }
-            const olympicsSorted = data.sort((a, b) => {
-                return getNbrMedals(b.participations) - getNbrMedals(a.participations);
-            });
-            olympicsSorted.forEach((olympic: IOlympic) => {
-                this.countries.push(olympic.country);
-                this.nbrMedals.push(getNbrMedals(olympic.participations));
-                this.nbrOfJOs = this.getNbrOfJOs(data);
-            });
-        })
+    loadData(): void {
+        this.olympicService.getOlympics()
+            .pipe((takeUntil(this.destroy$)))
+            .subscribe(({data, error}: {data:IOlympic[], error?: unknown}) => {
+                if(error) {
+                    this.errorMessage.set('An error occurred while fetching the data');
+                    return;
+                }
+                this.nbrOfJOs.set(this.getNbrOfJOs(data));
+                data.sort((a, b) => {
+                    return getNbrMedals(b.participations) - getNbrMedals(a.participations);
+                }).forEach((olympic: IOlympic) => {
+                    this.medalsByCountries.update((oldValue) => {
+                        return [...oldValue, {
+                            country: olympic.country,
+                            medals: getNbrMedals(olympic.participations)
+                        }];
+                    });
+                });
+            })
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
     
+    /**
+     * @param olympics
+     * @returns number
+     * @description get the number of JOs
+     */
     private getNbrOfJOs(olympics: IOlympic[]): number {
-        const listJo: number[] = [];
+        const listJo = new Set<number>();
         olympics.forEach((olympic: IOlympic) => {
             olympic.participations.forEach((participation) => {
-                if (!listJo.includes(participation.year)) {
-                    listJo.push(participation.year);
-                }
+                listJo.add(participation.year);
             });
         })
 
-        return listJo.length;
+        return listJo.size;
     }
 }
 

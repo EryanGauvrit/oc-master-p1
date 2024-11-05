@@ -1,5 +1,11 @@
 import { IParticipation } from "./models/Participation";
 
+/**
+ * 
+ * @param str 
+ * @returns string
+ * @description format a string to be used as a slug in a URL
+ */
 export const formatSlug = (str: string) => {
     return str
     .normalize('NFD') // Normalize diacritics
@@ -8,6 +14,12 @@ export const formatSlug = (str: string) => {
     .toLowerCase();
 };
 
+/**
+ * 
+ * @param participations 
+ * @returns number
+ * @description get the number of medals
+ */
 export const getNbrMedals = (participations: IParticipation[]) => {
     let totalMedals = 0;
     participations.forEach((participation: IParticipation) => {
@@ -16,6 +28,12 @@ export const getNbrMedals = (participations: IParticipation[]) => {
     return totalMedals;
 }
 
+/**
+ * 
+ * @param participations 
+ * @returns number
+ * @description get the number of athletes
+ */
 export const getNbrAthletes = (participations: IParticipation[]) => {
     let totalAthletes = 0;
     participations.forEach((participation: IParticipation) => {
@@ -24,7 +42,11 @@ export const getNbrAthletes = (participations: IParticipation[]) => {
     return totalAthletes;
 }
 
-// return aspect ratio based on media query
+/**
+ * 
+ * @returns number
+ * @description get the aspect ratio based on the screen size for the chart
+ */
 
 export const getAspectRatio = () => {
     if(window.matchMedia('(max-width: 768px)').matches) {
