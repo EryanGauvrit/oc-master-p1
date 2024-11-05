@@ -1,16 +1,16 @@
 
-<main *ngIf="olympic">
-    <h2>{{ olympic.country }}</h2>
+<main *ngIf="olympicByCountry">
+    <h2>{{ olympicByCountry.country }}</h2>
     <section class="cards">
-        <app-card title='Number of entries' [content]="olympic.participations.length.toString()"></app-card>
-        <app-card title='Total number medals' [content]="medalsCount.toString()"></app-card>
-        <app-card title='Total number of athletes' [content]="athletesCount.toString()"></app-card>
+        <app-card title='Number of entries' [content]="olympicByCountry.participationCount.toString()"></app-card>
+        <app-card title='Total number medals' [content]="olympicByCountry.medalsCount.toString()"></app-card>
+        <app-card title='Total number of athletes' [content]="olympicByCountry.athletesCount.toString()"></app-card>
     </section>
-    <section *ngIf="lineChartData" class="chart-container">
-        <app-line-chart [nbrMedals]="lineChartData.nbrMedals" [years]="lineChartData.years"></app-line-chart>
+    <section *ngIf="olympicByCountry.lineChartData" class="chart-container">
+        <app-line-chart [medalsPerYear]="olympicByCountry.lineChartData"></app-line-chart>
     </section>
 </main>
-<main *ngIf="!olympic">
+<main *ngIf="!olympicByCountry">
     <h2>
         No Olympic games found
     </h2>

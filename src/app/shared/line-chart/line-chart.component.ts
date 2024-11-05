@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { IMedalsPerYear } from 'src/app/core/models/MedalsPerYear';
 
 @Component({
     selector: 'app-line-chart',
@@ -10,11 +10,8 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 
 export class LineChartComponent implements OnInit {
-    @Input() years!: string[];
-    @Input() nbrMedals!: number[];
+    @Input() medalsPerYear!: IMedalsPerYear[];
     @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
-    constructor(private router: Router) {}
 
     public lineChartOptions: ChartConfiguration['options'] = {
         responsive: true,
@@ -32,25 +29,18 @@ export class LineChartComponent implements OnInit {
             },
         },
     };
-    public lineChartData: ChartData<'line', number[], string | string[]> = {
-        labels: this.years,
-        datasets: [
-            {
-                data: this.nbrMedals,
-            },
-        ],
-    };
+    public lineChartData?: ChartData<'line', number[], string | string[]>;
     public lineChartType: ChartType = 'line';
 
 
 
     ngOnInit(): void {
         this.lineChartData = {
-        labels: this.years,
+        labels: this.medalsPerYear.map(medal => medal.year.toString()),
         datasets: [
             {
                 label: '🏅',
-                data: this.nbrMedals,
+                data: this.medalsPerYear.map(medal => medal.nbrMedals),
             },
         ],
         };

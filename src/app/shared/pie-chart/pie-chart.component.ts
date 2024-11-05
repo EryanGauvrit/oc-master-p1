@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveElement, ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { IMedalsPerCountry } from 'src/app/core/models/MedalsPerCountry';
 import { formatSlug, getAspectRatio } from 'src/app/core/util';
 
 @Component({
@@ -10,8 +11,7 @@ import { formatSlug, getAspectRatio } from 'src/app/core/util';
 })
 
 export class PieChartComponent implements OnInit {
-    @Input() countries!: string[];
-    @Input() nbrMedals!: number[];
+    @Input() medalsByCountries!: IMedalsPerCountry[];
 
     constructor(private router: Router) {}
 
@@ -49,6 +49,9 @@ export class PieChartComponent implements OnInit {
     public pieChartData?: ChartData<'pie', number[], string | string[]>;
     public pieChartType: ChartType = 'pie';
 
+    /**
+     * @description custom plugin to add labels to the pie chart
+     */
     public pieChartPlugins: ChartConfiguration['plugins'] = [{
         id: 'customLabels',
         
@@ -106,11 +109,11 @@ export class PieChartComponent implements OnInit {
 
     ngOnInit(): void {
         this.pieChartData = {
-            labels: this.countries,
+            labels: this.medalsByCountries.map(({country}) => country),
             datasets: [
                 {
                     label: '🏅',
-                    data: this.nbrMedals,
+                    data: this.medalsByCountries.map(({medals}) => medals),
                     backgroundColor: this.colors,
                     borderWidth: 0,
                 },
@@ -129,7 +132,7 @@ export class PieChartComponent implements OnInit {
 
         if (active && active.length > 0) {
             const activeElement = active[0] as ActiveElement;
-            const country = this.countries[activeElement.index];
+            const country = this.medalsByCountries[activeElement.index].country;
             const slug = formatSlug(country);
             await this.router.navigate(['/country', slug]);
         }
