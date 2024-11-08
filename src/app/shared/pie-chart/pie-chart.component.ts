@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveElement, ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { IMedalsPerCountry } from 'src/app/core/models/MedalsPerCountry';
-import { formatSlug, getAspectRatio } from 'src/app/core/util';
+import { getAspectRatio } from 'src/app/core/util';
 
 @Component({
     selector: 'app-pie-chart',
@@ -108,6 +108,13 @@ export class PieChartComponent implements OnInit {
     }]
 
     ngOnInit(): void {
+        this.initChart();
+    }
+    
+    /**
+     * @description initialize the pie chart with the medals by countries
+     */
+    private initChart(): void {
         this.pieChartData = {
             labels: this.medalsByCountries.map(({country}) => country),
             datasets: [
@@ -121,7 +128,13 @@ export class PieChartComponent implements OnInit {
         };
     }
 
-    // events
+    /**
+     * 
+     * @param event 
+     * @param active 
+     * @returns void
+     * @description navigate to the country page when a pie chart slice is clicked
+     */
     public async chartClicked({ 
         event, 
         active
@@ -132,9 +145,8 @@ export class PieChartComponent implements OnInit {
 
         if (active && active.length > 0) {
             const activeElement = active[0] as ActiveElement;
-            const country = this.medalsByCountries[activeElement.index].country;
-            const slug = formatSlug(country);
-            await this.router.navigate(['/country', slug]);
+            const countryId = this.medalsByCountries[activeElement.index].id;
+            await this.router.navigate(['/country', countryId]);
         }
     }
 

@@ -2,20 +2,6 @@ import { IParticipation } from "./models/Participation";
 
 /**
  * 
- * @param str 
- * @returns string
- * @description format a string to be used as a slug in a URL
- */
-export const formatSlug = (str: string) => {
-    return str
-    .normalize('NFD') // Normalize diacritics
-    .replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/[^a-zA-Z0-9]/g, '-') // Replace non-alphanumeric characters with a hyphen
-    .toLowerCase();
-};
-
-/**
- * 
  * @param participations 
  * @returns number
  * @description get the number of medals
