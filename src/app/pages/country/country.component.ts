@@ -16,12 +16,12 @@ export class CountryComponent implements OnInit {
 
     ngOnInit(): void {
         this.activated.params.subscribe(async (params) => {
-            if(!params['country']) {
+            if(!params['id']) {
                 this.router.navigate(['/not-found']);
                 return;
             }
             try {
-                this.olympicByCountry = await firstValueFrom(this.olympicService.loadDataByCountry(params['country']));
+                this.olympicByCountry = await firstValueFrom(this.olympicService.loadDataByCountry(Number(params['id'])));
                 if(!this.olympicByCountry) {
                     this.router.navigate(['/not-found']);
                     return;
