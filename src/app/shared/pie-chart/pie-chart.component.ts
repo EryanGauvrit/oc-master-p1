@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveElement, ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import { fromEvent, map, Observable, startWith } from 'rxjs';
 import { IMedalsPerCountry } from 'src/app/core/models/MedalsPerCountry';
 import { getAspectRatio } from 'src/app/core/util';
 
@@ -12,6 +14,7 @@ import { getAspectRatio } from 'src/app/core/util';
 
 export class PieChartComponent implements OnInit {
     @Input() medalsByCountries!: IMedalsPerCountry[];
+    @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
     constructor(private router: Router) {}
 
@@ -19,7 +22,6 @@ export class PieChartComponent implements OnInit {
     public pieChartOptions: ChartConfiguration['options'] = {
         responsive: true,
         maintainAspectRatio: false,
-        aspectRatio: getAspectRatio(),
         layout: {
             padding: 20,
         },
@@ -109,6 +111,12 @@ export class PieChartComponent implements OnInit {
 
     ngOnInit(): void {
         this.initChart();
+        this.resizeChart().subscribe((ratio => {
+            if (this.pieChartOptions){
+                this.pieChartOptions["aspectRatio"] = ratio;
+                this.chart?.render();
+            }
+        }));
     }
     
     /**
@@ -150,4 +158,15 @@ export class PieChartComponent implements OnInit {
         }
     }
 
+
+    /**
+     * @returns Observable<number>
+     * @description resize the chart based on the window width
+     */
+    private resizeChart = (): Observable<number> => {
+        return fromEvent(window, 'resize').pipe(
+            startWith(null),
+            map(() => getAspectRatio(window.innerWidth))
+        );
+    }
 }

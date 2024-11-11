@@ -29,15 +29,14 @@ export const getNbrAthletes = (participations: IParticipation[]) => {
 }
 
 /**
- * 
+ * @param width
  * @returns number
- * @description get the aspect ratio based on the screen size for the chart
+ * @description get the aspect ratio based on the width
  */
-
-export const getAspectRatio = () => {
-    if(window.matchMedia('(max-width: 768px)').matches) {
+export const getAspectRatio = (width: number) => {
+    if(width < 768) {
         return 1.8;
-    } else if(window.matchMedia('(max-width: 1024px)').matches) {
+    } else if(width < 1024) {
         return 1.2;
     } else {
         return 1;
