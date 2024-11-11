@@ -17,7 +17,6 @@ export class OlympicService {
     constructor(private http: HttpClient) {}
 
     /**
-     * 
      * @returns Subscription
      * @description load the initial data and manage the error
      */
@@ -33,7 +32,6 @@ export class OlympicService {
     }
 
     /**
-     * 
      * @param country 
      * @returns Observable<ILoadDataByCountry>
      * @description get the olympic data by country
@@ -61,7 +59,6 @@ export class OlympicService {
     }
 
     /**
-     * 
      * @returns Observable<{data:{medalsPerCountry: IMedalsPerCountry[], nbrOfJOs: number}, error?: unknown}>
      * @description get the olympics data
      */
